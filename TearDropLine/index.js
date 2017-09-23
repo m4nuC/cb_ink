@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
   StyleSheet,
+  Dimensions
 } from 'react-native';
 import { Svg } from 'expo';
 import { TEARDROP_RADIUS, MAIN_COLOR } from '../constants';
@@ -14,23 +15,62 @@ export class TearDropLine extends Component {
     })
   }
 
+  get middle() {
+    const leftPoint = this.leftPoint;
+    const rightPoint = this.rightPoint;
+    const middleX = (rightPoint.cx - leftPoint.cx)/2;
+    return this.getPointOnlineFromX(middleX)
+  }
+
+  get YIntercept() {
+    return this.normalizeSVGYAxis(this.leftPoint.cy)
+  }
+
   get rightPoint() {
-    return this.props.points.reduce((leftMost, next) => {
-      return leftMost.cx > next.cx ? leftMost : next
+    return this.props.points.reduce((rightMost, next) => {
+      return rightMost.cx > next.cx ? rightMost : next
     })
+  }
+
+  normalizeSVGYAxis(yValue) {
+    const { height } = Dimensions.get('window');
+    return height - yValue
+  }
+
+
+  get slope() {
+    const leftPoint = this.leftPoint;
+    const rightPoint = this.rightPoint;
+
+    return (this.normalizeSVGYAxis(rightPoint.cy) - this.normalizeSVGYAxis(leftPoint.cy)) /
+      (rightPoint.cx - leftPoint.cx)
+  }
+
+  getPointOnlineFromX(x) {
+    console.log('slope', this.slope)
+    return {
+      cx: x,
+      cy: this.normalizeSVGYAxis(
+        this.normalizeSVGYAxis(this.leftPoint.cy) + this.slope * x
+      )
+    }
   }
 
   render() {
     const { points, strokeColor, strokeWidth} = this.props;
+    if (points.length < 2) { return null }
+    const leftPoint = this.leftPoint;
+    const rightPoint = this.rightPoint;
+
     return (
       <Svg.Line
-        stroke-width={strokeWidth} stroke={strokeColor}
-        x1={this.leftPoint.cx + TEARDROP_RADIUS/2}
-        y1={this.leftPoint.cy + TEARDROP_RADIUS/2}
-        x2={this.rightPoint.cx - TEARDROP_RADIUS/2}
-        y2={this.rightPoint.cy - TEARDROP_RADIUS/2}
+        strokeWidth={strokeWidth} stroke={strokeColor}
+        x1={ leftPoint.cx }
+        y1={ leftPoint.cy }
+        x2={ rightPoint.cx }
+        y2={ rightPoint.cy }
       />
-    )
+    );
   }
 }
 

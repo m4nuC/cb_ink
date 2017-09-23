@@ -7,6 +7,7 @@ export const inklinationAngle = (state = [], action) => {
       if (state.length === 2) {
         return state;
       }
+      console.log(action.teardrop)
       return [].concat(state, action.teardrop)
     default:
       return state;
