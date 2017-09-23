@@ -17,10 +17,16 @@ export default class ImagePicker extends React.Component {
 
   _pickImage = async () => {
     const { imageChange } = this.props;
-    const image = await ExpoImagePicker.launchCameraAsync({});
-    if ( ! image.cancelled) {
-      imageChange(image);
+    try {
+      const image = await ExpoImagePicker.launchCameraAsync({});
+      if ( ! image.cancelled) {
+        imageChange(image);
+      }
+    } catch(e) {
+      console.warn(e)
     }
+
+
   };
 
   static propTypes = {
