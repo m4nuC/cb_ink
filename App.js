@@ -4,6 +4,7 @@ import {
   Text,
   View,
   Image,
+  ScrollView,
   Dimensions
 } from 'react-native';
 import SVGStage from './SVGStage';
@@ -18,25 +19,27 @@ export default class App extends React.Component {
   }
 
   imageChange = (image) => {
-    this.setState({image})
+    this.setState({image});
   }
 
   render() {
     const { image } = this.state;
     return (
-      <PinchZoomView style={styles.container}>
-        <View style={styles.imageContainer}>
+      <View style={styles.container}>
+        <ScrollView maximumZoomScale={4} style={styles.pinchableView}>
           { image &&
-            <Image style={styles.image} source={{uri: image.uri}} />
+            <View style={styles.imageContainer}>
+              <Image style={styles.image} source={{uri: image.uri}} />
+            </View>
           }
-        </View>
-        <SVGStage>
-          <TearDrop cx={50} cy={50} r={4} />
-        </SVGStage>
+          <SVGStage>
+            <TearDrop cx={50} cy={50} r={4} />
+          </SVGStage>
+        </ScrollView>
         <View style={styles.bottomUI}>
           <ImagePicker imageChange={this.imageChange}/>
         </View>
-      </PinchZoomView>
+      </View>
     );
   }
 }
@@ -45,17 +48,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#000000',
-    alignItems: 'stretch',
-    justifyContent: 'center'
+    justifyContent: 'space-between'
+  },
+  pinchableView: {
+    flex:1,
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
   },
   bottomUI: {
-    position: 'absolute',
-    bottom: 0,
+    height: 20,
     width: Dimensions.get('window').width,
     backgroundColor: 'rgba(0,0,0,.8)'
   },
   imageContainer: {
     flex: 1,
+    height: Dimensions.get('window').height,
+    width: Dimensions.get('window').width,
+    backgroundColor: 'red',
     alignItems: 'stretch'
   },
   text: {
