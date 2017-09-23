@@ -7,9 +7,9 @@ import {
   ScrollView,
   Dimensions
 } from 'react-native';
-import TearDropStage from './TearDropStage/';
+import TearDropStage from '../TearDropStage/';
 import PinchZoomView from 'react-native-pinch-zoom-view';
-import ImagePicker from './ImagePicker/';
+import ImagePicker from '../ImagePicker/';
 
 export default class App extends React.Component {
   state = {
@@ -17,6 +17,7 @@ export default class App extends React.Component {
   }
 
   imageChange = (image) => {
+    this.props.resetTeardrop();
     this.setState({image});
   }
 
