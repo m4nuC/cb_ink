@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import {
   StyleSheet,
 } from 'react-native';
-import { Constants, Svg } from 'expo';
+import { Svg } from 'expo';
+import { TEARDROP_RADIUS, MAIN_COLOR } from '../constants';
 
 export const TearDrop = ({
   cx,
@@ -17,7 +18,7 @@ export const TearDrop = ({
     <Svg.Circle
       cx={cx}
       cy={cy}
-      r={radius}
+      r={TEARDROP_RADIUS}
       strokeWidth={strokeWidth}
       stroke={strokeColor}
       fill={fillColor}
@@ -28,7 +29,7 @@ export const TearDrop = ({
 TearDrop.defaultProps = {
   strokeWidth: 2,
   radius: 10,
-  strokeColor: '#8AEBFF',
+  strokeColor: MAIN_COLOR,
   fillColor: 'rgba(0,0,0,0.5)'
 }
 
