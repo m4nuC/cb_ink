@@ -7,10 +7,9 @@ import {
   ScrollView,
   Dimensions
 } from 'react-native';
-import SVGStage from './SVGStage';
-import TearDrop from './TearDrop';
+import TearDropStage from './TearDropStage/';
 import PinchZoomView from 'react-native-pinch-zoom-view';
-import ImagePicker from './ImagePicker';
+import ImagePicker from './ImagePicker/';
 
 
 export default class App extends React.Component {
@@ -32,9 +31,7 @@ export default class App extends React.Component {
               <Image style={styles.image} source={{uri: image.uri}} />
             </View>
           }
-          <SVGStage>
-            <TearDrop cx={50} cy={50} r={4} />
-          </SVGStage>
+          <TearDropStage/>
         </ScrollView>
         <View style={styles.bottomUI}>
           <ImagePicker imageChange={this.imageChange}/>

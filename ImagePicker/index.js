@@ -9,13 +9,13 @@ export default class ImagePicker extends React.Component {
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Button
           title="Take a picture with the IPad camera"
-          onPress={this._pickImage}
+          onPress={this.pickImage}
         />
       </View>
     );
   }
 
-  _pickImage = async () => {
+  pickImage = async () => {
     const { imageChange } = this.props;
     try {
       const image = await ExpoImagePicker.launchCameraAsync({});
@@ -25,8 +25,6 @@ export default class ImagePicker extends React.Component {
     } catch(e) {
       console.warn(e)
     }
-
-
   };
 
   static propTypes = {
