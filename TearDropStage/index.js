@@ -1,30 +1,13 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import {
-  StyleSheet,
-  TouchableWithoutFeedback,
-  Dimensions
-} from 'react-native';
-import { Constants, Svg } from 'expo';
-import TearDrop from '../TearDrop';
+import { connect } from 'react-redux';
+import { setTeardrop } from '../actions'
+import TearDropStage from './TearDropStage';
 
-export default class TearDropStage extends React.Component {
+const mapStateToProps = state => ({
+  tearDrops: state.tearDrops
+})
 
-  handlePress(evt) {
-    console.warn(evt.nativeEvent)
-    console.log('asdfs')
-  }
+const mapDispatchToProps = dispatch => ({
+  setTeardrop: data => dispatch(setTeardrop(data))
+})
 
-  render() {
-    const { width, height } = Dimensions.get('window');
-    const { children } = this.props;
-
-    return (
-      <TouchableWithoutFeedback onPress={evt => this.handlePress(evt)}>
-        <Svg height={height} width={width} style={{position: 'absolute'}}>
-          <TearDrop cx={50} cy={50} r={4} />
-        </Svg>
-      </TouchableWithoutFeedback>
-     )
-  }
-}
+export default connect(mapStateToProps, mapDispatchToProps)(TearDropStage);
