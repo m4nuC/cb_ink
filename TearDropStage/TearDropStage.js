@@ -7,9 +7,14 @@ import {
 } from 'react-native';
 import { Svg } from 'expo';
 import TearDrop from '../TearDrop';
+import TearDropLine from '../TearDropLine';
 import { TEARDROP_RADIUS, MAIN_COLOR } from '../constants';
 
 export default class TearDropStage extends React.Component {
+
+  state = {
+    angle: 40
+  }
 
   handlePress(evt) {
     const { setTeardrop } = this.props;
@@ -33,13 +38,7 @@ export default class TearDropStage extends React.Component {
           }
           {
             tearDrops.length === 2 &&
-            <Svg.Line
-              stroke-width="2" stroke={MAIN_COLOR}
-              x1={tearDrops[0].cx + TEARDROP_RADIUS/2}
-              y1={tearDrops[0].cy + TEARDROP_RADIUS/2}
-              x2={tearDrops[1].cx - TEARDROP_RADIUS/2}
-              y2={tearDrops[1].cy - TEARDROP_RADIUS/2}
-            />
+              <TearDropLine points={tearDrops}/>
           }
         </Svg>
       </TouchableWithoutFeedback>
