@@ -21,20 +21,24 @@ export default class TearDropStage extends React.Component {
     activeTeardropID: null,
 
     // Should we reverse the angleline
-    flipLine: false
+    flipLine: false,
+
+    tempTearDrop: {show: false, pos: {cx: 0, cy: 0}}
   }
 
   _panResponder = genPanHandlers({
     onPanResponderMove: (evt, gestureState) => {
-      const { activeTeardropID } = this.state;
+      const { activeTeardropID, tempTearDrop } = this.state;
       const { moveX, moveY, numberActiveTouches } = gestureState;
 
+      if (numberActiveTouches > 1) return;
+
       // Move teardrops or angle line base point
-      if (activeTeardropID && numberActiveTouches === 1) {
+      if (activeTeardropID) {
         let angleLineBase = null;
+
         if (activeTeardropID === 'angleLine-base') {
           angleLineBase = this.tearDropLine.getPointAtX(moveX)
-
         // Move Teardrops points
         } else {
           this.props.moveTeardrop({
@@ -45,11 +49,17 @@ export default class TearDropStage extends React.Component {
         }
         this.setAngleLine(angleLineBase);
       }
+
+      // move the temporary teardrop (used to give instant feedback when users touches the screen)
+      if (tempTearDrop.show) {
+        this.setState({tempTearDrop: {show: true, pos: {cx: moveX, cy: moveY}}});
+      }
     },
 
-    // onPanResponderRelease: (evt, gestureState) => {
-    //   this.setState({activeTeardropID: null});
-    // },
+    onPanResponderGrant: (evt, gestureState) => {
+      const { locationX, locationY } = evt.nativeEvent;
+      this.setState({tempTearDrop: {show: true, pos: {cx: locationX, cy: locationY}}});
+    },
 
     onPanResponderRelease: (evt, gestureState) => {
       const { locationX, locationY } = evt.nativeEvent;
@@ -59,7 +69,10 @@ export default class TearDropStage extends React.Component {
         cx: locationX,
         cy: locationY
       });
-      this.setState({activeTeardropID: null});
+      this.setState({
+        activeTeardropID: null,
+        tempTearDrop: {show: false, pos: {cx: 0, cy: 0}}
+      });
     }
   })
 
@@ -96,7 +109,7 @@ export default class TearDropStage extends React.Component {
   render() {
     const { width, height } = Dimensions.get('window');
     const { tearDrops, inklinationAngle } = this.props;
-    const { angleLine, flipLine, activeTeardropID } = this.state;
+    const { angleLine, flipLine, activeTeardropID, tempTearDrop } = this.state;
     const angle = flipLine ? 180 - inklinationAngle : inklinationAngle;
     return (
       <Svg
@@ -115,7 +128,6 @@ export default class TearDropStage extends React.Component {
             key={id} cx={cx} cy={cy} id={id}
           />)
         }
-
         { angleLine &&
           <Svg.Line
             rotate={`-${angle}`}
@@ -137,6 +149,13 @@ export default class TearDropStage extends React.Component {
             cx={angleLine.base.cx} cy={angleLine.base.cy}
           />
         }
+
+        <TearDrop
+          opacity={ tempTearDrop.show ? 0.6 : 0}
+          radius={20}
+          cx={tempTearDrop.pos.cx} cy={tempTearDrop.pos.cy}
+        />
+
       </Svg>
      )
   }
