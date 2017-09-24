@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {
-  StyleSheet,
-  Dimensions,
-  TouchableWithoutFeedback,
-  View
-} from 'react-native';
+import { Dimensions } from 'react-native';
 import genPanHandlers from '../genPanHandlers'
 import { Svg } from 'expo';
 import TearDrop from '../TearDrop';
@@ -76,33 +71,32 @@ export default class TearDropStage extends React.Component {
     const { angleLine, angle } = this.state;
 
     return (
-      <View { ...this._panResponder.panHandlers }>
-        <Svg height={height} width={width}
-          style={{position: 'absolute'}}
-        >
-          <TearDropLine points={tearDrops}
-            ref={el => this.tearDropLine = el}
-          />
-          { tearDrops.map(({cx, cy, id}) =>
-            <TearDrop
-              setActiveTearDrop={this.setActiveTearDrop}
-              key={id} cx={cx} cy={cy} id={id}
-            />)
-          }
+      <Svg { ...this._panResponder.panHandlers }
+        height={height} width={width}
+        style={{position: 'absolute'}}
+      >
+        <TearDropLine points={tearDrops}
+          ref={el => this.tearDropLine = el}
+        />
+        { tearDrops.map(({cx, cy, id}) =>
+          <TearDrop
+            setActiveTearDrop={this.setActiveTearDrop}
+            key={id} cx={cx} cy={cy} id={id}
+          />)
+        }
 
-          { angleLine &&
-            <Svg.Line
-              rotate={`-${angle}`}
-              origin={`${angleLine.start.cx}, ${angleLine.start.cy}`}
-              strokeWidth={3} stroke='red'
-              x1={ angleLine.start.cx }
-              y1={ angleLine.start.cy }
-              x2={ angleLine.end.cx }
-              y2={ angleLine.end.cy }
-            />
-          }
-        </Svg>
-      </View>
+        { angleLine &&
+          <Svg.Line
+            rotate={`-${angle}`}
+            origin={`${angleLine.start.cx}, ${angleLine.start.cy}`}
+            strokeWidth={3} stroke='red'
+            x1={ angleLine.start.cx }
+            y1={ angleLine.start.cy }
+            x2={ angleLine.end.cx }
+            y2={ angleLine.end.cy }
+          />
+        }
+      </Svg>
      )
   }
 }
