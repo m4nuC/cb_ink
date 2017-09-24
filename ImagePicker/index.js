@@ -12,7 +12,6 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 10,
     borderRadius: 30,
-
     alignSelf: 'center'
   },
 });

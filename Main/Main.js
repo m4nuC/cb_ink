@@ -4,12 +4,14 @@ import {
   Text,
   View,
   Image,
+  TextInput,
   ScrollView,
   Dimensions
 } from 'react-native';
 import TearDropStage from '../TearDropStage/';
 import PinchZoomView from 'react-native-pinch-zoom-view';
 import ImagePicker from '../ImagePicker/';
+import { TEARDROP_RADIUS, MAIN_COLOR } from '../constants';
 
 export default class App extends React.Component {
   state = {
@@ -37,6 +39,10 @@ export default class App extends React.Component {
           <TearDropStage/>
         </ScrollView>
         <View style={styles.bottomUI}>
+          <View>
+            <Text style={styles.text} >ANGLE</Text>
+            <TextInput style={styles.input}/>
+          </View>
           <View>
             <Text style={styles.title} >INLKINATION COMPARAISON</Text>
             <Text style={styles.text} >COMPARE INLKINATION ANGLE VS. TARGET ANGLE</Text>
@@ -68,7 +74,15 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width,
     backgroundColor: 'rgba(0,0,0,.8)'
   },
-
+  input: {
+    width: 50,
+    height: 20,
+    backgroundColor: 'rgba(0,0,0,.3)',
+    borderColor: 'black',
+    color: MAIN_COLOR,
+    borderRadius: 3,
+    padding: 4
+  },
   imageContainer: {
     flex: 1,
     height: Dimensions.get('window').height,
