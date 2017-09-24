@@ -26,6 +26,7 @@ export default class TearDropStage extends React.Component {
           cx: moveX,
           cy: moveY
         });
+        this.setAngleLine();
       }
     },
 
