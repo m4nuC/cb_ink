@@ -8,7 +8,6 @@ import {
   Dimensions,
   Platform
 } from 'react-native';
-import Expo from 'expo';
 import Spinner from 'rn-spinner';
 import TearDropStage from '../../containers/TearDropStage/';
 import PinchZoomView from 'react-native-pinch-zoom-view';
@@ -39,12 +38,17 @@ export default class App extends React.Component {
     this.props.setInklination(angle);
   }
 
+
   render() {
     const { image, reorientedAt } = this.state;
     const { inklinationAngle } = this.props;
     return (
-      <View reorientedAt={reorientedAt} style={this.styles.container}>
-        <ScrollView scrollEnabled={false}
+      <View
+        reorientedAt={reorientedAt}
+        style={this.styles.container}
+      >
+        <ScrollView
+          scrollEnabled={false}
           maximumZoomScale={4}
           style={this.styles.pinchableView}
         >
@@ -53,12 +57,12 @@ export default class App extends React.Component {
               <Image style={this.styles.image} source={{uri: image.uri}} />
             </View>
           }
-          <TearDropStage/>
+          <TearDropStage />
         </ScrollView>
         <View style={this.styles.bottomUI}>
           <View>
             <Text style={this.styles.title} >INLKINATION COMPARAISON</Text>
-            <Text style={this.styles.text} >COMPARE INLKINATION ANGLE VS. TARGET ANGLE</Text>
+            <Text style={this.styles.gray} >COMPARE INLKINATION ANGLE VS. TARGET ANGLE</Text>
           </View>
           <View style={this.styles.input}>
             <Text style={this.styles.center_text} >ANGLE</Text>
@@ -112,6 +116,9 @@ export default class App extends React.Component {
       center_text: {
         textAlign: 'center',
         color: 'white',
+      },
+      gray: {
+        color: 'gray',
       },
       text: {
         color: 'white',

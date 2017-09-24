@@ -34,6 +34,8 @@ export default class TearDropStage extends React.Component {
         let angleLineBase = null;
         if (activeTeardropID === 'angleLine-base') {
           angleLineBase = this.tearDropLine.getPointAtX(moveX)
+
+        // Move Teardrops points
         } else {
           this.props.moveTeardrop({
             id: activeTeardropID,
@@ -45,16 +47,20 @@ export default class TearDropStage extends React.Component {
       }
     },
 
+    // onPanResponderRelease: (evt, gestureState) => {
+    //   this.setState({activeTeardropID: null});
+    // },
+
     onPanResponderRelease: (evt, gestureState) => {
-     const { locationX, locationY } = evt.nativeEvent;
-     const activeTeardropID = Date.now();
-     this.props.setTeardrop({
-       id: activeTeardropID,
-       cx: locationX,
-       cy: locationY
-     });
-     this.setState({activeTeardropID: null});
-   }
+      const { locationX, locationY } = evt.nativeEvent;
+      const activeTeardropID = Date.now();
+      this.props.setTeardrop({
+        id: activeTeardropID,
+        cx: locationX,
+        cy: locationY
+      });
+      this.setState({activeTeardropID: null});
+    }
   })
 
   setActiveTearDrop = activeTeardropID => {
@@ -81,7 +87,7 @@ export default class TearDropStage extends React.Component {
     this.setState({
       angleLine: {
         base,
-        end: this.tearDropLine.getPointAtX(width)
+        end: this.tearDropLine.getPointAtX(1000)
       },
       flipLine
     })
@@ -93,8 +99,10 @@ export default class TearDropStage extends React.Component {
     const { angleLine, flipLine, activeTeardropID } = this.state;
     const angle = flipLine ? 180 - inklinationAngle : inklinationAngle;
     return (
-      <Svg { ...this._panResponder.panHandlers }
-        height={height} width={width}
+      <Svg
+        {...this._panResponder.panHandlers}
+        height={height}
+        width={width}
         style={{position: 'absolute'}}
       >
         <TearDropLine points={tearDrops}

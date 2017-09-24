@@ -3,7 +3,6 @@
     "name": "CB Ink",
     "name": "cb-ink",
     "sdkVersion": "21.0.0",
-    "orientation": "landscape",
     "privacy": "public"
   }
 }

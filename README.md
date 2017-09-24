@@ -17,8 +17,8 @@ Unity3D was also a good option as out of the box, it would have taken care of tr
 - Testing on more devices and versions of IOS
 - The zooming could be improved. Right now when zoomed in, single finger panning is disabled.
 - Unit testing: could aim to 100% coverage on this app
-- Performance: i.e. right now when moving the teardrops very fast there is some latency in the angle line update, general perf.. 
-- Finish the missing features (if needed): Portrait mode (just need to remove a configuration option `app.json`), UI for more accurate placement of teardrops, inversion of the image colors.
+- Performance: i.e. right now when moving the teardrops very fast there is some latency in the angle line update, general perf..
+- Finish the missing features (if needed): ~~Portrait mode (just need to remove a configuration option `app.json`)~~, UI for more accurate placement of teardrops, inversion of the image colors.
 
 ## Development
 Install dependencies: `yarn install`
