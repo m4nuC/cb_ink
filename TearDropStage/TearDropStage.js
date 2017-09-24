@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import {
   StyleSheet,
   TouchableWithoutFeedback,
-  Dimensions
+  Dimensions,
+  View
 } from 'react-native';
+import genPanHandlers from '../genPanHandlers'
 import { Svg } from 'expo';
 import TearDrop from '../TearDrop';
 import TearDropLine from '../TearDropLine';
@@ -17,6 +19,23 @@ export default class TearDropStage extends React.Component {
     angleLine: null
   }
 
+  _panResponder = genPanHandlers({
+    onPanResponderMove: (evt, gestureState) => {
+      console.log(gestureState)
+    },
+    onPanResponderRelease: (evt, gestureState) => {
+     const { setTeardrop } = this.props;
+     const { locationX, locationY } = evt.nativeEvent;
+     setTeardrop({
+       id: Date.now(),
+       cx: locationX,
+       cy: locationY
+     });
+   }
+ })
+
+
+
   handlePress(evt) {
     const { setTeardrop } = this.props;
     const { locationX, locationY } = evt.nativeEvent;
@@ -26,6 +45,12 @@ export default class TearDropStage extends React.Component {
       cy: locationY
     });
   }
+
+  handleMove(evt) {
+    const { locationX, locationY } = evt.nativeEvent;
+    console.log(locationX, locationY)
+  }
+
 
   componentDidUpdate(prevProps) {
     // we need to make sure that TearDropLine has
@@ -52,7 +77,9 @@ export default class TearDropStage extends React.Component {
     const { tearDrops } = this.props;
     const { angleLine, angle } = this.state;
     return (
-      <TouchableWithoutFeedback onPress={evt => this.handlePress(evt)}>
+      <View {...this._panResponder.panHandlers}
+        onMove={evt=>this.handleMove(evt)}
+        onPress={evt => this.handlePress(evt)}>
         <Svg height={height} width={width}
           style={{position: 'absolute'}}>
           <TearDropLine points={tearDrops}
@@ -74,7 +101,7 @@ export default class TearDropStage extends React.Component {
             />
           }
         </Svg>
-      </TouchableWithoutFeedback>
+      </View>
      )
   }
 }

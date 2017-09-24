@@ -8,6 +8,9 @@ import { Svg } from 'expo';
 import { TEARDROP_RADIUS, MAIN_COLOR } from '../constants';
 
 export class TearDrop extends Component {
+  onMoveHandler() {
+    console.log('clicked the teardrop')
+  }
   render() {
     const {
       cx,
@@ -17,17 +20,18 @@ export class TearDrop extends Component {
       fillColor,
       strokeColor,
     } = this.props;
+    return (
+        <Svg.Circle
+          onPress={this.onMoveHandler}
+          cx={cx}
+          cy={cy}
+          r={TEARDROP_RADIUS}
+          strokeWidth={strokeWidth}
+          stroke={strokeColor}
+          fill={fillColor}
+        />
+    )
   }
-  return (
-    <Svg.Circle
-      cx={cx}
-      cy={cy}
-      r={TEARDROP_RADIUS}
-      strokeWidth={strokeWidth}
-      stroke={strokeColor}
-      fill={fillColor}
-    />
-   )
 }
 
 TearDrop.defaultProps = {

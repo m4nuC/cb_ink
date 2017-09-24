@@ -1,4 +1,4 @@
-import { SET_TEARDROP, RESET_TEARDROP } from '../actions'
+import { SET_TEARDROP, RESET_TEARDROP, MOVE_TEARDROP } from '../actions'
 
 export const inklinationAngle = (state = [], action) => {
   switch (action.type) {
@@ -7,7 +7,12 @@ export const inklinationAngle = (state = [], action) => {
       if (state.length === 2) {
         return state;
       }
-      return [].concat(state, action.teardrop)
+      return [].concat(state, action.teardrop);
+    case MOVE_TEARDROP:
+      return [].concat(
+        state.filter(teardrop => teardrop.id === action.teardrop.id),
+        action.teardrop
+      );
     case RESET_TEARDROP:
       return [];
     default:
