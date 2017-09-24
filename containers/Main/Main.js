@@ -4,15 +4,14 @@ import {
   Text,
   View,
   Image,
-  TextInput,
   ScrollView,
   Dimensions
 } from 'react-native';
 import Spinner from 'rn-spinner';
-import TearDropStage from '../TearDropStage/';
+import TearDropStage from '../../containers/TearDropStage/';
 import PinchZoomView from 'react-native-pinch-zoom-view';
-import ImagePicker from '../ImagePicker/';
-import { TEARDROP_RADIUS, MAIN_COLOR } from '../constants';
+import ImagePicker from '../../components/ImagePicker/';
+import { TEARDROP_RADIUS, MAIN_COLOR } from '../../utilities/constants';
 
 export default class App extends React.Component {
   state = {
@@ -20,14 +19,12 @@ export default class App extends React.Component {
   }
 
   imageChange = (image) => {
-    // this.props.resetTeardrop();
     this.setState({image});
   }
 
   onAngleChange = (angle) => {
     this.props.setInklination(angle);
   }
-
 
   render() {
     const { image } = this.state;

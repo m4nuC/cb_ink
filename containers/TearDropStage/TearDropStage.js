@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Dimensions } from 'react-native';
-import genPanHandlers from '../genPanHandlers'
+import genPanHandlers from '../../utilities/genPanHandlers'
 import { Svg } from 'expo';
-import TearDrop from '../TearDrop';
-import TearDropLine from '../TearDropLine';
-import { TEARDROP_RADIUS, MAIN_COLOR } from '../constants';
+import TearDrop from '../../components/TearDrop';
+import TearDropLine from '../../components/TearDropLine';
+import { TEARDROP_RADIUS, MAIN_COLOR } from '../../utilities/constants';
 
 export default class TearDropStage extends React.Component {
 

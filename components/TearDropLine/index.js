@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {
-  StyleSheet,
-  Dimensions
-} from 'react-native';
+import { Dimensions } from 'react-native';
 import { Svg } from 'expo';
-import { TEARDROP_RADIUS, MAIN_COLOR } from '../constants';
+import { TEARDROP_RADIUS, MAIN_COLOR } from '../../utilities/constants';
 
 export class TearDropLine extends Component {
 
@@ -35,11 +32,6 @@ export class TearDropLine extends Component {
     })
   }
 
-  normalizeSVGYAxis(yValue) {
-    const { height } = Dimensions.get('window');
-    return height - yValue
-  }
-
   get slope() {
     const leftPoint = this.leftPoint;
     const rightPoint = this.rightPoint;
@@ -47,10 +39,15 @@ export class TearDropLine extends Component {
       (rightPoint.cx - leftPoint.cx)
   }
 
+  normalizeSVGYAxis(yValue) {
+    const { height } = Dimensions.get('window');
+    return height - yValue
+  }
+
+  // y = mx + b
   getPointAtX(x) {
     return {
       cx: x,
-      // y = mx + b
       cy: this.normalizeSVGYAxis(this.slope * x + this.YIntercept)
     }
   }
@@ -63,16 +60,6 @@ export class TearDropLine extends Component {
 
     const leftPoint = this.getPointAtX(0);
     const rightPoint = this.getPointAtX(width);
-    // console.log('screen height:', height)
-    // console.log(`a: ${this.leftPoint.cx} ${this.leftPoint.cy}`)
-    // console.log(`b: ${this.rightPoint.cx} ${this.rightPoint.cy}`)
-    // console.log(`a normalized: ${this.leftPoint.cx} ${this.normalizeSVGYAxis(this.leftPoint.cy)}`)
-    // console.log(`b normalized: ${this.rightPoint.cx} ${this.normalizeSVGYAxis(this.rightPoint.cy)}`)
-    // console.log(`a estimate: ${leftPoint.cx} ${leftPoint.cy}`)
-    // console.log(`b estimate: ${rightPoint.cx} ${rightPoint.cy}`)
-    // console.log(`a estimate norm.: ${leftPoint.cx} ${this.normalizeSVGYAxis(leftPoint.cy)}`)
-    // console.log(`b estimate norm.: ${rightPoint.cx} ${this.normalizeSVGYAxis(rightPoint.cy)}`)
-    // console.log(`slope ${this.slope}`)
     return (
       <Svg.Line
         strokeDasharray={[4, 2]}

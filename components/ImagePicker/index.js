@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
 import { ImagePicker as ExpoImagePicker} from 'expo';
-import { MAIN_COLOR } from '../constants';
+import { MAIN_COLOR } from '../../utilities/constants';
 
 const styles = StyleSheet.create({
   button: {
@@ -15,7 +15,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
 });
-
 
 export default class ImagePicker extends React.Component {
   render() {

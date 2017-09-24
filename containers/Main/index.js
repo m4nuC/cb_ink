@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { setInklination, resetTeardrop } from '../actions'
+import { setInklination, resetTeardrop } from '../../actions'
 import Main from './Main';
 
 const mapStateToProps = state => ({
