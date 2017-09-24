@@ -58,9 +58,11 @@ export default class TearDropStage extends React.Component {
   }
 
   setAngleLine() {
+    const { width } = Dimensions.get('screen');
+
     this.setState({
       angleLine: {
-        start: this.tearDropLine.middle, end: this.tearDropLine.rightPoint
+        start: this.tearDropLine.middle, end: this.tearDropLine.getPointFromX(width)
       }
     })
   }
@@ -89,11 +91,19 @@ export default class TearDropStage extends React.Component {
           <Svg.Line
             rotate={`-${inklinationAngle}`}
             origin={`${angleLine.start.cx}, ${angleLine.start.cy}`}
-            strokeWidth={3} stroke='red'
+            strokeWidth={2} stroke={MAIN_COLOR}
             x1={ angleLine.start.cx }
             y1={ angleLine.start.cy }
             x2={ angleLine.end.cx }
             y2={ angleLine.end.cy }
+          />
+        }
+        { angleLine &&
+          <TearDrop
+            radius={4}
+            fillColor={MAIN_COLOR}
+            setActiveTearDrop={this.setActiveTearDrop}
+            cx={angleLine.start.cx} cy={angleLine.start.cy}
           />
         }
       </Svg>

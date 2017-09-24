@@ -20,7 +20,7 @@ export class TearDrop extends Component {
         onPressIn={() => setActiveTearDrop(id)}
         cx={cx}
         cy={cy}
-        r={TEARDROP_RADIUS}
+        r={radius}
         strokeWidth={strokeWidth}
         stroke={strokeColor}
         fill={fillColor}
@@ -31,7 +31,7 @@ export class TearDrop extends Component {
 
 TearDrop.defaultProps = {
   strokeWidth: 2,
-  radius: 10,
+  radius: TEARDROP_RADIUS,
   strokeColor: MAIN_COLOR,
   fillColor: 'rgba(0,0,0,0.5)'
 }
