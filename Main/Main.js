@@ -25,7 +25,10 @@ export default class App extends React.Component {
     const { image } = this.state;
     return (
       <View style={styles.container}>
-        <ScrollView scrollEnabled={false} maximumZoomScale={4} style={styles.pinchableView}>
+        <ScrollView scrollEnabled={false}
+          maximumZoomScale={4}
+          style={styles.pinchableView}
+        >
           { image &&
             <View style={styles.imageContainer}>
               <Image style={styles.image} source={{uri: image.uri}} />

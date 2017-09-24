@@ -16,11 +16,11 @@ export default class TearDropStage extends React.Component {
   }
 
   _panResponder = genPanHandlers({
-    // onStartShouldSetPanResponderCapture: (evt, gestureState) => true,
+    // onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
     onPanResponderMove: (evt, gestureState) => {
       const { activeTeardropID } = this.state;
-      if (activeTeardropID) {
-        const { moveX, moveY } = gestureState;
+      const { moveX, moveY, numberActiveTouches } = gestureState;
+      if (activeTeardropID && numberActiveTouches === 1) {
         this.props.moveTeardrop({
           id: activeTeardropID,
           cx: moveX,
