@@ -26,6 +26,7 @@
     "react-native": "^0.47.0",
     "react-native-pinch-zoom-view": "^0.1.2",
     "react-redux": "^5.0.6",
-    "redux": "^3.7.2"
+    "redux": "^3.7.2",
+    "rn-spinner": "^0.3.2"
   }
 }

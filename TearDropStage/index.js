@@ -3,7 +3,8 @@ import { setTeardrop, moveTeardrop } from '../actions'
 import TearDropStage from './TearDropStage';
 
 const mapStateToProps = state => ({
-  tearDrops: state.tearDrops
+  tearDrops: state.tearDrops,
+  inklinationAngle: state.inklinationAngle
 })
 
 const mapDispatchToProps = dispatch => ({

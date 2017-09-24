@@ -10,7 +10,6 @@ import { TEARDROP_RADIUS, MAIN_COLOR } from '../constants';
 export default class TearDropStage extends React.Component {
 
   state = {
-    angle: 20,
     angleLine: null,
     activeTeardropID: null
   }
@@ -68,8 +67,8 @@ export default class TearDropStage extends React.Component {
 
   render() {
     const { width, height } = Dimensions.get('window');
-    const { tearDrops } = this.props;
-    const { angleLine, angle } = this.state;
+    const { tearDrops, inklinationAngle } = this.props;
+    const { angleLine } = this.state;
 
     return (
       <Svg { ...this._panResponder.panHandlers }
@@ -88,7 +87,7 @@ export default class TearDropStage extends React.Component {
 
         { angleLine &&
           <Svg.Line
-            rotate={`-${angle}`}
+            rotate={`-${inklinationAngle}`}
             origin={`${angleLine.start.cx}, ${angleLine.start.cy}`}
             strokeWidth={3} stroke='red'
             x1={ angleLine.start.cx }

@@ -1,9 +1,15 @@
 import { connect } from 'react-redux';
-import { resetTeardrop } from '../actions'
+import { setInklination, resetTeardrop } from '../actions'
 import Main from './Main';
 
-const mapDispatchToProps = dispatch => ({
-  resetTeardrop: data => dispatch(resetTeardrop())
+const mapStateToProps = state => ({
+  inklinationAngle: state.inklinationAngle
 })
 
-export default connect(null, mapDispatchToProps)(Main);
+
+const mapDispatchToProps = dispatch => ({
+  setInklination: angle => dispatch(setInklination(angle)),
+  resetTeardrop: () => dispatch(resetTeardrop())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

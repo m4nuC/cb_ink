@@ -8,6 +8,7 @@ import {
   ScrollView,
   Dimensions
 } from 'react-native';
+import Spinner from 'rn-spinner';
 import TearDropStage from '../TearDropStage/';
 import PinchZoomView from 'react-native-pinch-zoom-view';
 import ImagePicker from '../ImagePicker/';
@@ -23,8 +24,14 @@ export default class App extends React.Component {
     this.setState({image});
   }
 
+  onAngleChange = (angle) => {
+    this.props.setInklination(angle);
+  }
+
+
   render() {
     const { image } = this.state;
+    const { inklinationAngle } = this.props;
     return (
       <View style={styles.container}>
         <ScrollView scrollEnabled={false}
@@ -40,12 +47,17 @@ export default class App extends React.Component {
         </ScrollView>
         <View style={styles.bottomUI}>
           <View>
-            <Text style={styles.text} >ANGLE</Text>
-            <TextInput style={styles.input}/>
-          </View>
-          <View>
             <Text style={styles.title} >INLKINATION COMPARAISON</Text>
             <Text style={styles.text} >COMPARE INLKINATION ANGLE VS. TARGET ANGLE</Text>
+          </View>
+          <View>
+            <Text style={styles.text} >ANGLE</Text>
+            <Spinner
+              value={inklinationAngle}
+              style={styles.input}
+              max={80}
+              onNumChange={this.onAngleChange}
+            />
           </View>
           <ImagePicker imageChange={this.imageChange}/>
         </View>
@@ -75,13 +87,16 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,.8)'
   },
   input: {
-    width: 50,
-    height: 20,
+    width: 45,
+    textAlign: 'center',
+    fontSize: 14,
+    fontWeight: 'bold',
+    height: 24,
     backgroundColor: 'rgba(0,0,0,.3)',
     borderColor: 'black',
     color: MAIN_COLOR,
     borderRadius: 3,
-    padding: 4
+    padding: 5
   },
   imageContainer: {
     flex: 1,
