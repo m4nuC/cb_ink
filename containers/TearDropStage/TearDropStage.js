@@ -86,7 +86,7 @@ export default class TearDropStage extends React.Component {
   render() {
     const { width, height } = Dimensions.get('window');
     const { tearDrops, inklinationAngle } = this.props;
-    const { angleLine, flipLine } = this.state;
+    const { angleLine, flipLine, activeTeardropID } = this.state;
     const angle = flipLine ? 180 - inklinationAngle : inklinationAngle;
     return (
       <Svg { ...this._panResponder.panHandlers }
@@ -98,6 +98,7 @@ export default class TearDropStage extends React.Component {
         />
         { tearDrops.map(({cx, cy, id}) =>
           <TearDrop
+            opacity={id === activeTeardropID ? 0.6 : 1}
             setActiveTearDrop={this.setActiveTearDrop}
             key={id} cx={cx} cy={cy} id={id}
           />)
@@ -117,6 +118,7 @@ export default class TearDropStage extends React.Component {
         { angleLine &&
           <TearDrop
             radius={5}
+            opacity={'angleLine-base' === activeTeardropID ? 0.6 : 1}
             fillColor={MAIN_COLOR}
             setActiveTearDrop={this.setActiveTearDrop}
             id="angleLine-base"

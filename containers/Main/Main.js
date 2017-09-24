@@ -47,8 +47,8 @@ export default class App extends React.Component {
             <Text style={styles.title} >INLKINATION COMPARAISON</Text>
             <Text style={styles.text} >COMPARE INLKINATION ANGLE VS. TARGET ANGLE</Text>
           </View>
-          <View>
-            <Text style={styles.text} >ANGLE</Text>
+          <View style={styles.input}>
+            <Text style={styles.center_text} >ANGLE</Text>
             <Spinner
               value={inklinationAngle}
               style={styles.input}
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     overflow: 'hidden',
-    backgroundColor: '#fff',
+    backgroundColor: '#000000',
     justifyContent: 'space-between'
   },
   pinchableView: {
@@ -76,36 +76,29 @@ const styles = StyleSheet.create({
     height: Dimensions.get('window').height,
   },
   bottomUI: {
-    paddingTop: 10,
-    paddingBottom: 10,
+    paddingTop: 8,
+    paddingBottom: 8,
     flexDirection: 'row',
     justifyContent: 'space-around',
     width: Dimensions.get('window').width,
     backgroundColor: 'rgba(0,0,0,.8)'
   },
   input: {
-    width: 45,
-    textAlign: 'center',
-    fontSize: 14,
-    fontWeight: 'bold',
-    height: 24,
-    backgroundColor: 'rgba(0,0,0,.3)',
-    borderColor: 'black',
-    color: MAIN_COLOR,
-    borderRadius: 3,
-    padding: 5
   },
   imageContainer: {
     flex: 1,
     height: Dimensions.get('window').height,
     width: Dimensions.get('window').width,
-    backgroundColor: 'red',
-    alignItems: 'stretch'
+    marginBottom: 30
   },
   title: {
     color: 'white',
     fontSize: 20,
     fontWeight: 'bold'
+  },
+  center_text: {
+    textAlign: 'center',
+    color: 'white',
   },
   text: {
     color: 'white',

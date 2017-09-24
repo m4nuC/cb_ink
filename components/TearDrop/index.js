@@ -10,13 +10,18 @@ export const TearDrop = ({
     radius,
     strokeWidth,
     fillColor,
+    scale,
     strokeColor,
+    opacity,
     setActiveTearDrop,
   }) => (
   <Svg.Circle
     onPressIn={() => setActiveTearDrop(id)}
     cx={cx}
     cy={cy}
+    scale={scale}
+    fillOpacity={opacity}
+    strokeOpacity={opacity}
     r={radius}
     strokeWidth={strokeWidth}
     stroke={strokeColor}
@@ -26,6 +31,8 @@ export const TearDrop = ({
 
 TearDrop.defaultProps = {
   strokeWidth: 2,
+  scale: 1,
+  opacity: 1,
   radius: TEARDROP_RADIUS,
   strokeColor: MAIN_COLOR,
   fillColor: 'rgba(0,0,0,0.5)'
