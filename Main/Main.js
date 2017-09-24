@@ -20,7 +20,7 @@ export default class App extends React.Component {
   }
 
   imageChange = (image) => {
-    this.props.resetTeardrop();
+    // this.props.resetTeardrop();
     this.setState({image});
   }
 

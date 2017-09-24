@@ -4,6 +4,7 @@ import { Svg } from 'expo';
 import { TEARDROP_RADIUS, MAIN_COLOR } from '../constants';
 
 export class TearDrop extends Component {
+
   render() {
     const {
       id,

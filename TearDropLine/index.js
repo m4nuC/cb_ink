@@ -16,7 +16,7 @@ export class TearDropLine extends Component {
   }
 
   get middle() {
-    return this.getPointFromX(this.middleX)
+    return this.getPointAtX(this.middleX)
   }
 
   get middleX() {
@@ -47,7 +47,7 @@ export class TearDropLine extends Component {
       (rightPoint.cx - leftPoint.cx)
   }
 
-  getPointFromX(x) {
+  getPointAtX(x) {
     return {
       cx: x,
       // y = mx + b
@@ -61,8 +61,8 @@ export class TearDropLine extends Component {
 
     if (points.length < 2) { return null }
 
-    const leftPoint = this.getPointFromX(0);
-    const rightPoint = this.getPointFromX(width);
+    const leftPoint = this.getPointAtX(0);
+    const rightPoint = this.getPointAtX(width);
     // console.log('screen height:', height)
     // console.log(`a: ${this.leftPoint.cx} ${this.leftPoint.cy}`)
     // console.log(`b: ${this.rightPoint.cx} ${this.rightPoint.cy}`)

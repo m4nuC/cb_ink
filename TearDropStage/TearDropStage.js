@@ -10,22 +10,34 @@ import { TEARDROP_RADIUS, MAIN_COLOR } from '../constants';
 export default class TearDropStage extends React.Component {
 
   state = {
+    // Store coordinates of the angle line
     angleLine: null,
-    activeTeardropID: null
+
+    // The teardrop currently being dragged
+    activeTeardropID: null,
+
+    // Should we reverse the angleline
+    flipLine: false
   }
 
   _panResponder = genPanHandlers({
-    // onMoveShouldSetPanResponderCapture: (evt, gestureState) => true,
     onPanResponderMove: (evt, gestureState) => {
       const { activeTeardropID } = this.state;
       const { moveX, moveY, numberActiveTouches } = gestureState;
+
+      // Move teardrops or angle line base point
       if (activeTeardropID && numberActiveTouches === 1) {
-        this.props.moveTeardrop({
-          id: activeTeardropID,
-          cx: moveX,
-          cy: moveY
-        });
-        this.setAngleLine();
+        let angleLineBase = null;
+        if (activeTeardropID === 'angleLine-base') {
+          angleLineBase = this.tearDropLine.getPointAtX(moveX)
+        } else {
+          this.props.moveTeardrop({
+            id: activeTeardropID,
+            cx: moveX,
+            cy: moveY
+          });
+        }
+        this.setAngleLine(angleLineBase);
       }
     },
 
@@ -57,21 +69,25 @@ export default class TearDropStage extends React.Component {
     return degree * (Math.PI / 180);
   }
 
-  setAngleLine() {
+  setAngleLine(base) {
     const { width } = Dimensions.get('screen');
-
+    const middle = this.tearDropLine.middle;
+    base = base || middle;
+    const flipLine = base.cx < middle.cx;
     this.setState({
       angleLine: {
-        start: this.tearDropLine.middle, end: this.tearDropLine.getPointFromX(width)
-      }
+        base,
+        end: this.tearDropLine.getPointAtX(width)
+      },
+      flipLine
     })
   }
 
   render() {
     const { width, height } = Dimensions.get('window');
     const { tearDrops, inklinationAngle } = this.props;
-    const { angleLine } = this.state;
-
+    const { angleLine, flipLine } = this.state;
+    const angle = flipLine ? 180 - inklinationAngle : inklinationAngle;
     return (
       <Svg { ...this._panResponder.panHandlers }
         height={height} width={width}
@@ -89,21 +105,22 @@ export default class TearDropStage extends React.Component {
 
         { angleLine &&
           <Svg.Line
-            rotate={`-${inklinationAngle}`}
-            origin={`${angleLine.start.cx}, ${angleLine.start.cy}`}
+            rotate={`-${angle}`}
+            origin={`${angleLine.base.cx}, ${angleLine.base.cy}`}
             strokeWidth={2} stroke={MAIN_COLOR}
-            x1={ angleLine.start.cx }
-            y1={ angleLine.start.cy }
+            x1={ angleLine.base.cx }
+            y1={ angleLine.base.cy }
             x2={ angleLine.end.cx }
             y2={ angleLine.end.cy }
           />
         }
         { angleLine &&
           <TearDrop
-            radius={4}
+            radius={5}
             fillColor={MAIN_COLOR}
             setActiveTearDrop={this.setActiveTearDrop}
-            cx={angleLine.start.cx} cy={angleLine.start.cy}
+            id="angleLine-base"
+            cx={angleLine.base.cx} cy={angleLine.base.cy}
           />
         }
       </Svg>
