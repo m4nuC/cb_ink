@@ -3,8 +3,8 @@
 ## Installation
 1. Download the [Expo App iOS client](https://itunes.apple.com/us/app/expo-client/id982107779?mt=8]).
 2. Using Expo scan the QR code below:
-Note: *You may need to refresh or restart the Expo client as sometimes the app doesn't fully load and looks broken.*
 ![Expo QR code](https://raw.githubusercontent.com/m4nuC/cb_ink/master/expo_qr.png)
+Note: *You may need to refresh or restart the Expo client as sometimes the app doesn't fully load and looks broken.*
 
 
 ## Stack
