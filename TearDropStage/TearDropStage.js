@@ -66,7 +66,7 @@ export default class TearDropStage extends React.Component {
             <Svg.Line
               rotate={`-${angle}`}
               origin={`${angleLine.start.cx}, ${angleLine.start.cy}`}
-              strokeWidth={2} stroke='red'
+              strokeWidth={3} stroke='red'
               x1={ angleLine.start.cx }
               y1={ angleLine.start.cy }
               x2={ angleLine.end.cx }

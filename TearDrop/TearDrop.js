@@ -7,14 +7,17 @@ import {
 import { Svg } from 'expo';
 import { TEARDROP_RADIUS, MAIN_COLOR } from '../constants';
 
-export const TearDrop = ({
-  cx,
-  cy,
-  radius,
-  strokeWidth,
-  fillColor,
-  strokeColor,
-}) => {
+export class TearDrop extends Component {
+  render() {
+    const {
+      cx,
+      cy,
+      radius,
+      strokeWidth,
+      fillColor,
+      strokeColor,
+    } = this.props;
+  }
   return (
     <Svg.Circle
       cx={cx}

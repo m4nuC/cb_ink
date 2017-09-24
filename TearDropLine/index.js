@@ -23,7 +23,9 @@ export class TearDropLine extends Component {
   }
 
   get YIntercept() {
-    return this.normalizeSVGYAxis(this.leftPoint.cy)
+    return this.normalizeSVGYAxis(
+      (this.slope * this.leftPoint.cx) + this.leftPoint.cy
+    )
   }
 
   get rightPoint() {
@@ -41,29 +43,39 @@ export class TearDropLine extends Component {
   get slope() {
     const leftPoint = this.leftPoint;
     const rightPoint = this.rightPoint;
-
     return (this.normalizeSVGYAxis(rightPoint.cy) - this.normalizeSVGYAxis(leftPoint.cy)) /
       (rightPoint.cx - leftPoint.cx)
   }
 
   getPointOnlineFromX(x) {
-    console.log('slope', this.slope)
     return {
       cx: x,
-      cy: this.normalizeSVGYAxis(
-        this.normalizeSVGYAxis(this.leftPoint.cy) + this.slope * x
-      )
+      // y = mx + b
+      cy: this.normalizeSVGYAxis(this.slope * x + this.YIntercept)
     }
   }
 
   render() {
     const { points, strokeColor, strokeWidth} = this.props;
-    if (points.length < 2) { return null }
-    const leftPoint = this.leftPoint;
-    const rightPoint = this.rightPoint;
+    const { width, height} = Dimensions.get('screen');
 
+    if (points.length < 2) { return null }
+
+    const leftPoint = this.getPointOnlineFromX(0);
+    const rightPoint = this.getPointOnlineFromX(width);
+    // console.log('screen height:', height)
+    // console.log(`a: ${this.leftPoint.cx} ${this.leftPoint.cy}`)
+    // console.log(`b: ${this.rightPoint.cx} ${this.rightPoint.cy}`)
+    // console.log(`a normalized: ${this.leftPoint.cx} ${this.normalizeSVGYAxis(this.leftPoint.cy)}`)
+    // console.log(`b normalized: ${this.rightPoint.cx} ${this.normalizeSVGYAxis(this.rightPoint.cy)}`)
+    // console.log(`a estimate: ${leftPoint.cx} ${leftPoint.cy}`)
+    // console.log(`b estimate: ${rightPoint.cx} ${rightPoint.cy}`)
+    // console.log(`a estimate norm.: ${leftPoint.cx} ${this.normalizeSVGYAxis(leftPoint.cy)}`)
+    // console.log(`b estimate norm.: ${rightPoint.cx} ${this.normalizeSVGYAxis(rightPoint.cy)}`)
+    // console.log(`slope ${this.slope}`)
     return (
       <Svg.Line
+        strokeDasharray={[4, 2]}
         strokeWidth={strokeWidth} stroke={strokeColor}
         x1={ leftPoint.cx }
         y1={ leftPoint.cy }
