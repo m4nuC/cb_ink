@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { setTeardrop } from '../actions'
+import { setTeardrop, moveTeardrop } from '../actions'
 import TearDropStage from './TearDropStage';
 
 const mapStateToProps = state => ({
@@ -7,7 +7,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  setTeardrop: data => dispatch(setTeardrop(data))
+  setTeardrop: data => dispatch(setTeardrop(data)),
+  moveTeardrop: data => dispatch(moveTeardrop(data)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TearDropStage);

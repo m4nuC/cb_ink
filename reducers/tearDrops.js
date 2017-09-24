@@ -10,7 +10,7 @@ export const inklinationAngle = (state = [], action) => {
       return [].concat(state, action.teardrop);
     case MOVE_TEARDROP:
       return [].concat(
-        state.filter(teardrop => teardrop.id === action.teardrop.id),
+        state.filter(teardrop => teardrop.id != action.teardrop.id),
         action.teardrop
       );
     case RESET_TEARDROP:

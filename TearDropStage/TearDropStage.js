@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
   StyleSheet,
-  TouchableWithoutFeedback,
   Dimensions,
+  TouchableWithoutFeedback,
   View
 } from 'react-native';
 import genPanHandlers from '../genPanHandlers'
@@ -16,41 +16,38 @@ export default class TearDropStage extends React.Component {
 
   state = {
     angle: 20,
-    angleLine: null
+    angleLine: null,
+    activeTeardropID: null
   }
 
   _panResponder = genPanHandlers({
     onPanResponderMove: (evt, gestureState) => {
-      console.log(gestureState)
+      const { activeTeardropID } = this.state;
+      if (activeTeardropID) {
+        const { moveX, moveY } = gestureState;
+        this.props.moveTeardrop({
+          id: activeTeardropID,
+          cx: moveX,
+          cy: moveY
+        });
+      }
     },
+
     onPanResponderRelease: (evt, gestureState) => {
-     const { setTeardrop } = this.props;
      const { locationX, locationY } = evt.nativeEvent;
-     setTeardrop({
-       id: Date.now(),
+     const activeTeardropID = Date.now();
+     this.props.setTeardrop({
+       id: activeTeardropID,
        cx: locationX,
        cy: locationY
      });
+     this.setState({activeTeardropID: null});
    }
- })
+  })
 
-
-
-  handlePress(evt) {
-    const { setTeardrop } = this.props;
-    const { locationX, locationY } = evt.nativeEvent;
-    setTeardrop({
-      id: Date.now(),
-      cx: locationX,
-      cy: locationY
-    });
+  setActiveTearDrop = activeTeardropID => {
+    this.setState({activeTeardropID});
   }
-
-  handleMove(evt) {
-    const { locationX, locationY } = evt.nativeEvent;
-    console.log(locationX, locationY)
-  }
-
 
   componentDidUpdate(prevProps) {
     // we need to make sure that TearDropLine has
@@ -76,17 +73,20 @@ export default class TearDropStage extends React.Component {
     const { width, height } = Dimensions.get('window');
     const { tearDrops } = this.props;
     const { angleLine, angle } = this.state;
+
     return (
-      <View {...this._panResponder.panHandlers}
-        onMove={evt=>this.handleMove(evt)}
-        onPress={evt => this.handlePress(evt)}>
+      <View { ...this._panResponder.panHandlers }>
         <Svg height={height} width={width}
-          style={{position: 'absolute'}}>
+          style={{position: 'absolute'}}
+        >
           <TearDropLine points={tearDrops}
             ref={el => this.tearDropLine = el}
           />
           { tearDrops.map(({cx, cy, id}) =>
-            <TearDrop key={id} cx={cx} cy={cy} />)
+            <TearDrop
+              setActiveTearDrop={this.setActiveTearDrop}
+              key={id} cx={cx} cy={cy} id={id}
+            />)
           }
 
           { angleLine &&

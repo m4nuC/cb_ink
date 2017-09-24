@@ -1,35 +1,30 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
 import { Svg } from 'expo';
 import { TEARDROP_RADIUS, MAIN_COLOR } from '../constants';
 
 export class TearDrop extends Component {
-  onMoveHandler() {
-    console.log('clicked the teardrop')
-  }
   render() {
     const {
+      id,
       cx,
       cy,
       radius,
       strokeWidth,
       fillColor,
       strokeColor,
+      setActiveTearDrop,
     } = this.props;
     return (
-        <Svg.Circle
-          onPress={this.onMoveHandler}
-          cx={cx}
-          cy={cy}
-          r={TEARDROP_RADIUS}
-          strokeWidth={strokeWidth}
-          stroke={strokeColor}
-          fill={fillColor}
-        />
+      <Svg.Circle
+        onPressIn={() => setActiveTearDrop(id)}
+        cx={cx}
+        cy={cy}
+        r={TEARDROP_RADIUS}
+        strokeWidth={strokeWidth}
+        stroke={strokeColor}
+        fill={fillColor}
+      />
     )
   }
 }
