@@ -37,6 +37,10 @@ export default class App extends React.Component {
           <TearDropStage/>
         </ScrollView>
         <View style={styles.bottomUI}>
+          <View>
+            <Text style={styles.title} >INLKINATION COMPARAISON</Text>
+            <Text style={styles.text} >COMPARE INLKINATION ANGLE VS. TARGET ANGLE</Text>
+          </View>
           <ImagePicker imageChange={this.imageChange}/>
         </View>
       </View>
@@ -48,7 +52,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     overflow: 'hidden',
-    backgroundColor: '#000000',
+    backgroundColor: '#fff',
     justifyContent: 'space-between'
   },
   pinchableView: {
@@ -57,10 +61,14 @@ const styles = StyleSheet.create({
     height: Dimensions.get('window').height,
   },
   bottomUI: {
-    height: 20,
+    paddingTop: 10,
+    paddingBottom: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
     width: Dimensions.get('window').width,
     backgroundColor: 'rgba(0,0,0,.8)'
   },
+
   imageContainer: {
     flex: 1,
     height: Dimensions.get('window').height,
@@ -68,8 +76,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
     alignItems: 'stretch'
   },
+  title: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold'
+  },
   text: {
-    color: 'white'
+    color: 'white',
   },
   image: {
     flex: 1
