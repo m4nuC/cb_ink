@@ -5,8 +5,10 @@ import {
   View,
   Image,
   ScrollView,
-  Dimensions
+  Dimensions,
+  Platform
 } from 'react-native';
+import Expo from 'expo';
 import Spinner from 'rn-spinner';
 import TearDropStage from '../../containers/TearDropStage/';
 import PinchZoomView from 'react-native-pinch-zoom-view';
@@ -14,8 +16,19 @@ import ImagePicker from '../../components/ImagePicker/';
 import { TEARDROP_RADIUS, MAIN_COLOR } from '../../utilities/constants';
 
 export default class App extends React.Component {
+  constructor() {
+    super();
+    // Event Listener for orientation changes
+    Dimensions.addEventListener('change', () => {
+      this.setState({
+          width: Dimensions.get('screen').width
+      });
+    });
+  }
+
   state = {
-    image: null
+    image: null,
+    width: Dimensions.get('screen').width
   }
 
   imageChange = (image) => {
@@ -27,31 +40,31 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { image } = this.state;
+    const { image, reorientedAt } = this.state;
     const { inklinationAngle } = this.props;
     return (
-      <View style={styles.container}>
+      <View reorientedAt={reorientedAt} style={this.styles.container}>
         <ScrollView scrollEnabled={false}
           maximumZoomScale={4}
-          style={styles.pinchableView}
+          style={this.styles.pinchableView}
         >
           { image &&
-            <View style={styles.imageContainer}>
-              <Image style={styles.image} source={{uri: image.uri}} />
+            <View style={this.styles.imageContainer}>
+              <Image style={this.styles.image} source={{uri: image.uri}} />
             </View>
           }
           <TearDropStage/>
         </ScrollView>
-        <View style={styles.bottomUI}>
+        <View style={this.styles.bottomUI}>
           <View>
-            <Text style={styles.title} >INLKINATION COMPARAISON</Text>
-            <Text style={styles.text} >COMPARE INLKINATION ANGLE VS. TARGET ANGLE</Text>
+            <Text style={this.styles.title} >INLKINATION COMPARAISON</Text>
+            <Text style={this.styles.text} >COMPARE INLKINATION ANGLE VS. TARGET ANGLE</Text>
           </View>
-          <View style={styles.input}>
-            <Text style={styles.center_text} >ANGLE</Text>
+          <View style={this.styles.input}>
+            <Text style={this.styles.center_text} >ANGLE</Text>
             <Spinner
               value={inklinationAngle}
-              style={styles.input}
+              style={this.styles.input}
               max={80}
               onNumChange={this.onAngleChange}
             />
@@ -61,49 +74,51 @@ export default class App extends React.Component {
       </View>
     );
   }
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    overflow: 'hidden',
-    backgroundColor: '#000000',
-    justifyContent: 'space-between'
-  },
-  pinchableView: {
-    flex:1,
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
-  },
-  bottomUI: {
-    paddingTop: 8,
-    paddingBottom: 8,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: Dimensions.get('window').width,
-    backgroundColor: 'rgba(0,0,0,.8)'
-  },
-  input: {
-  },
-  imageContainer: {
-    flex: 1,
-    height: Dimensions.get('window').height,
-    width: Dimensions.get('window').width,
-    marginBottom: 30
-  },
-  title: {
-    color: 'white',
-    fontSize: 20,
-    fontWeight: 'bold'
-  },
-  center_text: {
-    textAlign: 'center',
-    color: 'white',
-  },
-  text: {
-    color: 'white',
-  },
-  image: {
-    flex: 1
+  get styles() {
+    return StyleSheet.create({
+      container: {
+        flex: 1,
+        overflow: 'hidden',
+        backgroundColor: '#000000',
+        justifyContent: 'space-between'
+      },
+      pinchableView: {
+        flex:1,
+        width: Dimensions.get('screen').width,
+        height: Dimensions.get('screen').height,
+      },
+      bottomUI: {
+        paddingTop: 8,
+        paddingBottom: 8,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        width: Dimensions.get('screen').width,
+        backgroundColor: 'rgba(0,0,0,.8)'
+      },
+      input: {
+      },
+      imageContainer: {
+        flex: 1,
+        height: Dimensions.get('screen').height,
+        width: Dimensions.get('screen').width,
+        marginBottom: 30
+      },
+      title: {
+        color: 'white',
+        fontSize: 20,
+        fontWeight: 'bold'
+      },
+      center_text: {
+        textAlign: 'center',
+        color: 'white',
+      },
+      text: {
+        color: 'white',
+      },
+      image: {
+        flex: 1
+      }
+    })
   }
-});
+}

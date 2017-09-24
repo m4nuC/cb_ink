@@ -5,7 +5,6 @@
 2. Using Expo scan the QR code below:
 
 ![Expo QR code](https://raw.githubusercontent.com/m4nuC/cb_ink/master/expo_qr.png)
-Note: *You may need to refresh or restart the Expo client as sometimes the app doesn't fully load and looks broken.*
 
 
 ## Stack

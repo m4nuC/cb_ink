@@ -5,7 +5,11 @@ import genPanHandlers from '../../utilities/genPanHandlers'
 import { Svg } from 'expo';
 import TearDrop from '../../components/TearDrop';
 import TearDropLine from '../../components/TearDropLine';
-import { TEARDROP_RADIUS, MAIN_COLOR } from '../../utilities/constants';
+import {
+  TEARDROP_RADIUS,
+  MAIN_COLOR,
+  ANGLELINE_BASE_RADIUS
+} from '../../utilities/constants';
 
 export default class TearDropStage extends React.Component {
 
@@ -117,7 +121,7 @@ export default class TearDropStage extends React.Component {
         }
         { angleLine &&
           <TearDrop
-            radius={5}
+            radius={ANGLELINE_BASE_RADIUS}
             opacity={'angleLine-base' === activeTeardropID ? 0.6 : 1}
             fillColor={MAIN_COLOR}
             setActiveTearDrop={this.setActiveTearDrop}

@@ -2,7 +2,7 @@
   "expo": {
     "name": "CB Ink",
     "name": "cb-ink",
-    "sdkVersion": "20.0.0",
+    "sdkVersion": "21.0.0",
     "orientation": "landscape",
     "privacy": "public"
   }
