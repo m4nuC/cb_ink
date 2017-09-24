@@ -16,10 +16,11 @@ export class TearDropLine extends Component {
   }
 
   get middle() {
-    const leftPoint = this.leftPoint;
-    const rightPoint = this.rightPoint;
-    const middleX = (rightPoint.cx - leftPoint.cx)/2;
-    return this.getPointOnlineFromX(middleX)
+    return this.getPointFromX(this.middleX)
+  }
+
+  get middleX() {
+    return this.leftPoint.cx + (this.rightPoint.cx - this.leftPoint.cx)/2;
   }
 
   get YIntercept() {
@@ -39,7 +40,6 @@ export class TearDropLine extends Component {
     return height - yValue
   }
 
-
   get slope() {
     const leftPoint = this.leftPoint;
     const rightPoint = this.rightPoint;
@@ -47,7 +47,7 @@ export class TearDropLine extends Component {
       (rightPoint.cx - leftPoint.cx)
   }
 
-  getPointOnlineFromX(x) {
+  getPointFromX(x) {
     return {
       cx: x,
       // y = mx + b
@@ -61,8 +61,8 @@ export class TearDropLine extends Component {
 
     if (points.length < 2) { return null }
 
-    const leftPoint = this.getPointOnlineFromX(0);
-    const rightPoint = this.getPointOnlineFromX(width);
+    const leftPoint = this.getPointFromX(0);
+    const rightPoint = this.getPointFromX(width);
     // console.log('screen height:', height)
     // console.log(`a: ${this.leftPoint.cx} ${this.leftPoint.cy}`)
     // console.log(`b: ${this.rightPoint.cx} ${this.rightPoint.cy}`)

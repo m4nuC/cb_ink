@@ -42,7 +42,7 @@ export default class TearDropStage extends React.Component {
   setAngleLine() {
     this.setState({
       angleLine: {
-        start: this.tearDropLine.leftPoint, end: this.tearDropLine.rightPoint
+        start: this.tearDropLine.middle, end: this.tearDropLine.rightPoint
       }
     })
   }
