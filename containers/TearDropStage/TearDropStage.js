@@ -8,10 +8,22 @@ import TearDropLine from '../../components/TearDropLine';
 import {
   TEARDROP_RADIUS,
   MAIN_COLOR,
+  TOUCH_MARGIN,
   ANGLELINE_BASE_RADIUS
 } from '../../utilities/constants';
+import { clamp } from '../../utilities/helpers';
 
 export default class TearDropStage extends React.Component {
+  constructor() {
+    super();
+    // Event Listener for orientation changes
+    Dimensions.addEventListener('change', () => {
+      this._clampHorizontal =
+        clamp(TOUCH_MARGIN, Dimensions.get('screen').width - TOUCH_MARGIN);
+      this._clampVertical =
+        clamp(TOUCH_MARGIN + 40, Dimensions.get('screen').height - TOUCH_MARGIN);
+    });
+  }
 
   state = {
     // Store coordinates of the angle line
@@ -26,10 +38,16 @@ export default class TearDropStage extends React.Component {
     tempTearDrop: {show: false, pos: {cx: 0, cy: 0}}
   }
 
+  _clampHorizontal = clamp(TOUCH_MARGIN, Dimensions.get('screen').width - TOUCH_MARGIN)
+  _clampVertical = clamp(TOUCH_MARGIN + 40, Dimensions.get('screen').height - TOUCH_MARGIN)
+
   _panResponder = genPanHandlers({
     onPanResponderMove: (evt, gestureState) => {
       const { activeTeardropID, tempTearDrop } = this.state;
-      const { moveX, moveY, numberActiveTouches } = gestureState;
+      let { moveX, moveY, numberActiveTouches } = gestureState;
+
+      moveX = this._clampHorizontal(moveX);
+      moveY = this._clampHorizontal(moveY);
 
       if (numberActiveTouches > 1) return;
 
@@ -57,12 +75,17 @@ export default class TearDropStage extends React.Component {
     },
 
     onPanResponderGrant: (evt, gestureState) => {
-      const { locationX, locationY } = evt.nativeEvent;
+      let { locationX, locationY } = evt.nativeEvent;
+      locationX = this._clampHorizontal(locationX);
+      locationY = this._clampHorizontal(locationY);
       this.setState({tempTearDrop: {show: true, pos: {cx: locationX, cy: locationY}}});
     },
 
     onPanResponderRelease: (evt, gestureState) => {
-      const { locationX, locationY } = evt.nativeEvent;
+      let { locationX, locationY } = evt.nativeEvent;
+      locationX = this._clampHorizontal(locationX);
+      locationY = this._clampHorizontal(locationY);
+
       const activeTeardropID = Date.now();
       this.props.setTeardrop({
         id: activeTeardropID,

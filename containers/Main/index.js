@@ -6,7 +6,6 @@ const mapStateToProps = state => ({
   inklinationAngle: state.inklinationAngle
 })
 
-
 const mapDispatchToProps = dispatch => ({
   setInklination: angle => dispatch(setInklination(angle)),
   resetTeardrop: () => dispatch(resetTeardrop())
